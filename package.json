@@ -1,7 +1,7 @@
 {
-  "name": "get-component",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "name": "ember-get-component",
+  "version": "0.1.0",
+  "description": "Simple way to find Ember Components within tests.",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -15,7 +15,11 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Matthew Constantine <matthew@altschool.com>",
+  "contributors": [
+    "Anna Andresian <annaa@altschool.com>",
+    "Daniel Benton <danielb@altschool.com>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
@@ -26,7 +30,7 @@
     "ember-cli-htmlbars": "^1.0.1",
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
     "ember-cli-inject-live-reload": "^1.3.1",
-    "ember-cli-qunit": "^1.2.1",
+    "ember-cli-mocha": "0.10.4",
     "ember-cli-release": "0.2.8",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
@@ -36,13 +40,18 @@
     "ember-export-application-global": "^1.0.4",
     "ember-load-initializers": "^0.5.0",
     "ember-resolver": "^2.0.3",
+    "ember-sinon": "0.5.1",
+    "ember-test-helpers": "0.5.27",
     "ember-try": "^0.1.2",
     "loader.js": "^4.0.0"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "test-helper",
+    "ember-component"
   ],
   "dependencies": {
+    "ember-lodash": "0.0.10",
     "ember-cli-babel": "^5.1.5"
   },
   "ember-addon": {
