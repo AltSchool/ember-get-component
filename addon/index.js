@@ -132,7 +132,7 @@ function _logElements({ $items, collectionName, targetAttr, getElementMethodName
 function _logEmptyState(collectionName, recommendationText) {
   console.group(`%cI found no ${collectionName} in this context`, DEBUG_NULL_STATE_STYLE);
   console.log(recommendationText);
-  console.log('Here\'s some documentation for you: ${DOCUMENTATION_URL}');
+  console.log(`Here's some documentation for you: ${DOCUMENTATION_URL}`);
   console.groupEnd();
 }
 
