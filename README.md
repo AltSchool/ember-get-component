@@ -14,7 +14,14 @@ We often need to target components within tests. So far we've done this by eithe
 
 ##### Initialize the helper
 ```js
+// in test-helper.js
+import getComponent from 'ember-get-component';
 getComponent.init()
+```
+
+##### Add it to your test
+```js
+import getComponent from 'ember-get-component';
 ```
 
 ##### Get all components by their name
@@ -28,12 +35,6 @@ getComponent.elementByName('card-details/question')
 ```
 ```js
 getComponent.elementByTestAttr('specialWidget');
-```
-
-##### Get a jQuery selector for finding components by their name or testAttr
-```js
-getComponent.selectorByName('widget-item');
-getComponent.selectorByTestId('specialWidget');
 ```
 
 ##### Get a component instance from the Ember registry by name or testAttr
