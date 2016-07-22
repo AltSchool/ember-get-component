@@ -87,7 +87,7 @@ const debug = function() {
       getElementMethodName: 'elementsByName'
     });
   } else {
-    _logEmptyState('components', 'Please ensure that getComponent.init() was called in a beforeEach block.')
+    _logEmptyState('components', 'Please ensure that getComponent.init() was called in a beforeEach block.');
   }
   if ($testAttrs.length) {
     _logElements({
@@ -97,7 +97,7 @@ const debug = function() {
       getElementMethodName: 'elementsByTestAttr'
     });
   } else {
-    _logEmptyState('test-attrs', 'Add testAttrs to components like this: {{myComponent testAttr="specialComponent"}}')
+    _logEmptyState('test-attrs', 'Add testAttrs to components like this: {{myComponent testAttr="specialComponent"}}');
   }
   if ($testAttrs.length || $components.length) {
     console.groupCollapsed('%cHelpful testing code:', DEBUG_HELPFUL_STYLE);
@@ -145,15 +145,15 @@ function _logExampleCode({ $items, headerText, targetAttr, getElementMethodName 
     return `${acc}\nexpect(getComponent.${getElementMethodName}('${attrValue}')).to.have.length(${items.length});`;
   }, headerText);
   console.log(code);
-};
+}
 
 function _selectorByName(name) {
   return `[data-test-component-name="${name}"]`;
-};
+}
 
 function _selectorByTestAttr(testAttr) {
   return `[data-test-attr="${testAttr}"]`;
-};
+}
 
 /**
  * init
@@ -192,15 +192,3 @@ export default {
   instanceByConstructor,
   debug
 };
-
-export default {
-  init,
-  elementsByName,
-  elementsByTestAttr,
-  instanceByName,
-  instanceByTestAttr,
-  instanceByConstructor,
-  debug
-};
-
-
