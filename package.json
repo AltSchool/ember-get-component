@@ -43,7 +43,7 @@
     "ember-resolver": "^2.0.3",
     "ember-sinon": "0.5.1",
     "ember-test-helpers": "0.5.27",
-    "ember-try": "^0.1.2",
+    "ember-try": "^0.2.2",
     "loader.js": "^4.0.0"
   },
   "keywords": [
