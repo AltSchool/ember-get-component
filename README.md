@@ -58,7 +58,7 @@ getComponent.debug();
 ![Deluxe Debug](http://g.recordit.co/Gu2ghbHCuT.gif)
 
 ##### Future improvements
+- [x] Have debug group the output by component name and testId while providing a count.
 - [ ] Consider adding a second param to `elementsByName` and `elementsByAttr` to provide jQuery scope.
-- [ ] Have debug group the output by component name and testId while providing a count.
 
 How can this be better? Leave us feeback in an [issue](https://github.com/AltSchool/get-component/issues/new) or, better yet, send us a Pull Request.
