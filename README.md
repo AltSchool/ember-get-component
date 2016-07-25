@@ -1,4 +1,6 @@
-# getComponent test helper
+[![CircleCI](https://circleci.com/gh/AltSchool/ember-get-component.svg?style=svg)](https://circleci.com/gh/AltSchool/ember-get-component)
+
+# Ember GetComponent Test Helper
 
 ## Purpose
 Simplify the process of selecting components within integration tests.
