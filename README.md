@@ -1,5 +1,4 @@
-[![CircleCI](https://circleci.com/gh/AltSchool/ember-get-component.svg?style=svg)](https://circleci.com/gh/AltSchool/ember-get-component)
-
+ [![CircleCI](https://circleci.com/gh/AltSchool/ember-get-component.svg?style=svg)](https://circleci.com/gh/AltSchool/ember-get-component)
 # Ember GetComponent Test Helper
 
 ## Purpose
@@ -18,7 +17,7 @@ We often need to target components within tests. So far we've done this by eithe
 ```js
 // in test-helper.js
 import getComponent from 'ember-get-component';
-getComponent.init()
+getComponent.init();
 ```
 
 ##### Add it to your test
@@ -26,12 +25,12 @@ getComponent.init()
 import getComponent from 'ember-get-component';
 ```
 
-##### Get all components by their name
+##### Get all component DOM elements by their name
 ```js
-getComponent.elementByName('card-details/question')
+getComponent.elementByName('widget-item');
 ```
 
-##### Get all components elements by their testAttr
+##### Get all component DOM elements by their testAttr
 ```hbs
 {{widget-item testAttr="specialWidget"}}
 ```
@@ -46,10 +45,10 @@ getComponent.instanceByName('widget-item');
 getComponent.instanceByTestAttr('specialWidget');
 ```
 
-##### Get all component instances in this context from the Ember registry by the constructor
+##### Get a component instance in this context from the Ember registry by the constructor
 ```js
-import CardDetailsQuestions from 'wherever'
-getComponent.instancesByConstructor(CardDetailsQuestions)
+import WidgetItem from 'wherever';
+getComponent.instanceByConstructor(WidgetItem);
 ```
 
 ##### Super Deluxe Debugging
@@ -57,7 +56,7 @@ The debugger provides a list of components by name and testAttr as well as cut-a
 ```js
 getComponent.debug();
 ```
-![Deluxe Debug](http://g.recordit.co/Gu2ghbHCuT.gif)
+![Deluxe Debug](http://g.recordit.co/gHJlat2xq8.gif)
 
 ##### Future improvements
 - [x] Have debug group the output by component name and testId while providing a count.
