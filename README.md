@@ -27,7 +27,7 @@ import getComponent from 'ember-get-component';
 
 ##### Get all component DOM elements by their name
 ```js
-getComponent.elementByName('widget-item');
+getComponent.elementsByName('widget-item');
 ```
 
 ##### Get all component DOM elements by their testAttr
