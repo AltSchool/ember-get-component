@@ -17,7 +17,7 @@ const DOCUMENTATION_URL = 'https://github.com/AltSchool/ember-get-component';
  * @return {jQuery} a jQuery result set
  */
 const elementsByName = function(name) {
-  return getContext().$(_selectorByName(name));
+  return $(selectorByName(name));
 };
 
 /**
@@ -29,7 +29,7 @@ const elementsByName = function(name) {
  * @return {jQuery} a jQuery result set
  */
 const elementsByTestAttr = function(testAttr) {
-  return getContext().$(_selectorByTestAttr(testAttr));
+  return $(selectorByTestAttr(testAttr));
 };
 
 /**
@@ -61,7 +61,7 @@ const instanceByTestAttr = function(testAttr) {
  * @return {Component}
  */
 const instanceByConstructor = function(constructor) {
-  const parent = findComponentBySelector(getContext().$());
+  const parent = findComponentBySelector($());
   return findComponentByConstructor(constructor, parent);
 };
 
@@ -76,9 +76,8 @@ const instanceByConstructor = function(constructor) {
  *
  */
 const debug = function() {
-  const context = getContext();
-  const $testAttrs = context.$('[data-test-attr]');
-  const $components = context.$('[data-test-component-name]');
+  const $testAttrs = $('[data-test-attr]');
+  const $components = $('[data-test-component-name]');
   if ($components.length) {
     _logElements({
       '$items': $components,
@@ -147,12 +146,18 @@ function _logExampleCode({ $items, headerText, targetAttr, getElementMethodName 
   console.log(code);
 }
 
-function _selectorByName(name) {
+function selectorByName(name) {
   return `[data-test-component-name="${name}"]`;
 }
 
-function _selectorByTestAttr(testAttr) {
+function selectorByTestAttr(testAttr) {
   return `[data-test-attr="${testAttr}"]`;
+}
+
+function $() {
+  const context = getContext();
+  const jq = context && context.$ || Ember.$;
+  return jq(...arguments);
 }
 
 /**
@@ -190,5 +195,7 @@ export default {
   instanceByName,
   instanceByTestAttr,
   instanceByConstructor,
+  selectorByName,
+  selectorByTestAttr,
   debug
 };

@@ -51,6 +51,12 @@ import WidgetItem from 'wherever';
 getComponent.instanceByConstructor(WidgetItem);
 ```
 
+##### Get just the query selector
+```js
+const WIDGET_SELECTOR = getComponent.selectorByName('widget-item');
+const SPECIAL_WIDGET_SELECTOR = getComponent.selectorByName('specialWidget');
+```
+
 ##### Super Deluxe Debugging
 The debugger provides a list of components by name and testAttr as well as cut-and-paste-ready mocha assertions for testing visibility. Use it as a starting point in your tests.
 ```js
