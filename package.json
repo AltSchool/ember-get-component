@@ -1,6 +1,6 @@
 {
   "name": "ember-get-component",
-  "version": "0.2.0-beta-1",
+  "version": "0.2.0-beta.0",
   "description": "Simple way to find Ember Components within tests.",
   "directories": {
     "doc": "doc",
