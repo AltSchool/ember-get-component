@@ -54,7 +54,7 @@ getComponent.instanceByConstructor(WidgetItem);
 ##### Get just the query selector
 ```js
 const WIDGET_SELECTOR = getComponent.selectorByName('widget-item');
-const SPECIAL_WIDGET_SELECTOR = getComponent.selectorByName('specialWidget');
+const SPECIAL_WIDGET_SELECTOR = getComponent.selectorByTestAttr('specialWidget');
 ```
 
 ##### Super Deluxe Debugging
