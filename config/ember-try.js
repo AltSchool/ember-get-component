@@ -12,6 +12,11 @@ module.exports = {
     },
 
     {
+      name: 'Ember 2.8.0',
+      bower: { dependencies: {  'ember': '2.8.0'  } }
+    },
+
+    {
       name: 'Ember canary',
       allowedToFail: true,
       bower: {
