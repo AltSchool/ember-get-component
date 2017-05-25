@@ -1,7 +1,17 @@
 machine:
   node:
-    version: v0.12
+    version: 6
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
 dependencies:
-  post:
-    - npm install -g bower && bower cache clean && bower install
+  override:
+    - yarn
+    - yarn global add bower
+    - bower cache clean && bower install
+  cache_directories:
+    - ~/.cache/yarn
+
+test:
+  override:
+    - yarn test
