@@ -53,7 +53,7 @@
     "ember-component"
   ],
   "dependencies": {
-    "ember-lodash": "0.0.10",
+    "ember-lodash": "^4.17.4",
     "ember-cli-babel": "^5.1.5"
   },
   "ember-addon": {
