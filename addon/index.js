@@ -168,16 +168,20 @@ function $() {
  */
 const init = function() {
   Ember.Component.reopen({
-    attributeBindings: [
-      'data-test-component-name',
-      'testAttr:data-test-attr'
-    ],
-    'data-test-component-name': null,
-    'data-test-attr': null,
-
     init() {
       this._super.apply(this, arguments);
       const name = this.constructor.toString();
+
+      // Do nothing if it's a tagless component
+      if (this.get('tagName') === '') {
+        return;
+      }
+
+      // if it's not tagless, add the attrs to existing ones
+      const attrBindings = this.getWithDefault('attributeBindings', []);
+      this.set('attributeBindings', [...attrBindings, 'data-test-component-name', 'testAttr:data-test-attr']);
+      this.set('data-test-component-name', this.getWithDefault('data-test-component-name', null));
+
       // TODO: For now, this check is required to skip over generic components
       // that don't have a .js file. Follow-up task: figure out how to get the
       // template name from these types of components
