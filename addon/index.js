@@ -201,5 +201,7 @@ export default {
   instanceByConstructor,
   selectorByName,
   selectorByTestAttr,
+  findComponentBySelector,
+  findComponentByConstructor,
   debug
 };
