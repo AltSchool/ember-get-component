@@ -30,9 +30,12 @@ import {
  * b1, b2, b3, c1, c2, d1, d2, d3, d4, c3, c4, c5
  */
 export default function findComponentByConstructor(constructor, parent) {
-  const children = parent.childViews || [];
-  return children.find((child) => child instanceof constructor) ||
-    children.reduce((instance, child) => {
-      return instance || findComponentByConstructor(constructor, child);
-    }, undefined);
+  const registry = getContext().container.lookup('-view-registry:main');
+
+  for (let [k,v] of Object.entries(registry)) {
+    if (v instanceof constructor) {
+      return v;
+    }
+  }
+
 }
