@@ -105,9 +105,9 @@ describeComponent(
       let logs = '';
       const collectLog = log => logs += `${log}\n`;
       beforeEach(function() {
-        sinon.stub(console, 'log', collectLog);
-        sinon.stub(console, 'group', collectLog);
-        sinon.stub(console, 'groupCollapsed', collectLog);
+        sinon.stub(console, 'log').callsFake(collectLog);
+        sinon.stub(console, 'group').callsFake(collectLog);
+        sinon.stub(console, 'groupCollapsed').callsFake(collectLog);
       });
       afterEach(function() {
         logs = '';
