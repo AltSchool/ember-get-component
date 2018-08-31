@@ -173,13 +173,32 @@ const init = function() {
       const name = this.constructor.toString();
 
       // Do nothing if it's a tagless component
+
       if (this.get('tagName') === '') {
         return;
       }
 
       // if it's not tagless, add the attrs to existing ones
-      const attrBindings = this.getWithDefault('attributeBindings', []);
-      this.set('attributeBindings', [...attrBindings, 'data-test-component-name', 'testAttr:data-test-attr']);
+
+      const attrBindings = [
+        ...this.getWithDefault('attributeBindings', []),
+        'data-test-component-name'
+      ];
+
+      const getComponentDataTestAttrBinding = 'testAttr:data-test-attr';
+      const conflictingDataTestAttrBinding = attrBindings.find((attr) => {
+        return /(^|:)data-test-attr$/.test(attr) && attr !== getComponentDataTestAttrBinding;
+      });
+
+      if (!conflictingDataTestAttrBinding) {
+        attrBindings.push(getComponentDataTestAttrBinding);
+      } else if (this.get('testAttr')) {
+        throw new Ember.Error(
+          'cannot use `testAttr` if the component already has a `data-test-attr` binding'
+        );
+      }
+
+      this.set('attributeBindings', attrBindings);
       this.set('data-test-component-name', this.getWithDefault('data-test-component-name', null));
 
       // TODO: For now, this check is required to skip over generic components

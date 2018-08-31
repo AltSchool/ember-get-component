@@ -21,6 +21,9 @@ import register from '../helpers/register';
 import getComponent from 'ember-get-component';
 
 const FakeComponent = Component.extend({});
+const FakeDataTestAttrComponent = Component.extend({
+  attributeBindings: ['data-test-attr']
+});
 
 describeComponent(
   'get-component',
@@ -32,12 +35,31 @@ describeComponent(
 
     beforeEach(function() {
       register('component:fake-component', FakeComponent);
+      register('component:fake-component-with-data-test-attr', FakeDataTestAttrComponent);
       getComponent.init();
     });
 
     it('renders', function() {
       this.render(hbs`{{fake-component class="fake"}}`);
       expect(this.$('.fake')).to.have.length(1);
+    });
+
+    it('throws an error if testAttr overlaps with existing data-test-attr binding', function() {
+      const fn = () => {
+        this.render(hbs`
+          {{fake-component-with-data-test-attr testAttr="duck"}}
+        `);
+      }
+
+      expect(fn).to.throw(/cannot use `testAttr`/);
+    });
+
+    it('respects preexisting `data-test-attr` binding', function() {
+      this.render(hbs`
+        {{fake-component-with-data-test-attr data-test-attr="foo"}}
+      `);
+
+      expect(this.$('[data-test-attr="foo"]')).to.have.length(1);
     });
 
     describe('elementsByName', function() {
@@ -157,7 +179,6 @@ describeComponent(
         expect(logs).to.contain('expect(getComponent.elementsByTestAttr(\'fooTestAttr\')).to.have.length(2);');
       });
     });
-
   }
 );
 
