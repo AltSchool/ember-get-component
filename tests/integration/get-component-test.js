@@ -20,8 +20,6 @@ import hbs from 'htmlbars-inline-precompile';
 import register from '../helpers/register';
 import getComponent from 'ember-get-component';
 
-const FakeComponent = Component.extend({});
-
 describeComponent(
   'get-component',
   'Integration: GetComponentTestHelper',
@@ -29,9 +27,32 @@ describeComponent(
     integration: true
   },
   function() {
+    const FakeComponent = Component.extend({
+      // attribute binding that does not clash with `testAttr`
+      attributeBindings: ['my-data-test-attribute']
+    });
+    const FakeDataTestAttrComponent = Component.extend({
+      // attribute binding that clashes with `testAttr`
+      attributeBindings: ['data-test-attr']
+    });
+    const FakeNamedTestAttrComponent = Component.extend({
+      // attribute binding that clashes with `testAttr`
+      attributeBindings: ['attr:data-test-attr']
+    });
 
     beforeEach(function() {
-      register('component:fake-component', FakeComponent);
+      register(
+        'component:fake-component',
+        FakeComponent
+      );
+      register(
+        'component:fake-component-with-data-test-attr-binding',
+        FakeDataTestAttrComponent
+      );
+      register(
+        'component:fake-component-with-named-data-test-attr-binding',
+        FakeNamedTestAttrComponent
+      );
       getComponent.init();
     });
 
@@ -40,7 +61,51 @@ describeComponent(
       expect(this.$('.fake')).to.have.length(1);
     });
 
-    describe('elementsByName', function() {
+    describe('#init', function() {
+      it('sets `data-test-attr` if `testAttr` is passed into the component', function() {
+        this.render(hbs`{{fake-component testAttr="foo"}}`);
+
+        expect(this.$('[data-test-attr="foo"]')).to.have.length(1);
+      });
+
+      it('throws an error if `testAttr` overlaps with existing `data-test-attr` binding', function() {
+        const fn = () => {
+          this.render(hbs`
+            {{fake-component-with-data-test-attr-binding testAttr="duck"}}
+          `);
+        }
+
+        expect(fn).to.throw(/cannot use `testAttr`/);
+      });
+
+      it('throws an error if `testAttr` overlaps with existing `data-test-attr` bound to named property', function() {
+        const fn = () => {
+          this.render(hbs`
+            {{fake-component-with-named-data-test-attr-binding testAttr="duck"}}
+          `);
+        }
+
+        expect(fn).to.throw(/cannot use `testAttr`/);
+      });
+
+      it('respects preexisting `data-test-attr` binding', function() {
+        this.render(hbs`
+          {{fake-component-with-data-test-attr-binding data-test-attr="foo"}}
+        `);
+
+        expect(this.$('[data-test-attr="foo"]')).to.have.length(1);
+      });
+
+      it('respects preexisting `data-test-attr` bound to named property', function() {
+        this.render(hbs`
+          {{fake-component-with-named-data-test-attr-binding attr="foo"}}
+        `);
+
+        expect(this.$('[data-test-attr="foo"]')).to.have.length(1);
+      });
+    });
+
+    describe('#elementsByName', function() {
       it('returns component elements by name', function() {
         this.render(hbs`
           {{fake-component}}
@@ -51,7 +116,7 @@ describeComponent(
       });
     });
 
-    describe('elementsByTestAttr', function() {
+    describe('#elementsByTestAttr', function() {
       it('returns component elements by testAttr', function() {
         this.render(hbs`
           {{fake-component testAttr="duck"}}
@@ -63,7 +128,7 @@ describeComponent(
       });
     });
 
-    describe('instanceByName', function() {
+    describe('#instanceByName', function() {
       it('returns a component instance by name', function() {
         this.render(hbs`
           {{fake-component}}
@@ -73,7 +138,7 @@ describeComponent(
       });
     });
 
-    describe('instanceByTestAttr', function() {
+    describe('#instanceByTestAttr', function() {
       it('returns a component instance by testAttr', function() {
         this.render(hbs`
           {{fake-component testAttr="beans"}}
@@ -83,7 +148,7 @@ describeComponent(
       });
     });
 
-    describe('instanceByConstructor', function() {
+    describe('#instanceByConstructor', function() {
       it('returns a component instance by constructor', function() {
         this.render(hbs`
           {{fake-component}}
@@ -101,7 +166,7 @@ describeComponent(
       });
     });
 
-    describe('debug', function() {
+    describe('#debug', function() {
       let logs = '';
       const collectLog = log => logs += `${log}\n`;
       beforeEach(function() {
@@ -157,7 +222,6 @@ describeComponent(
         expect(logs).to.contain('expect(getComponent.elementsByTestAttr(\'fooTestAttr\')).to.have.length(2);');
       });
     });
-
   }
 );
 
