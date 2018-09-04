@@ -1,0 +1,48 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/ember-get-component
+    parallelism: 1
+
+    docker:
+    - image: circleci/node:6.14-stretch-browsers
+
+    environment:
+      APP_NAME: ember-get-component
+
+    steps:
+    - checkout
+    - run:
+        name: Update PATH variable
+        command: echo 'export PATH=""${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin""' >> ${BASH_ENV}
+    - restore_cache:
+        name: Restore Yarn Package Cache
+        keys:
+          - v1-yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+    - run:
+        name: Install Yarn Dependencies
+        command: yarn
+    - save_cache:
+        name: Save Yarn Package Cache
+        key: v1-yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        paths:
+          - ~/.cache/yarn
+    - run:                        # TODO: setup caching for installation of Bower
+        name: Add Bower
+        command: yarn global add bower
+    - restore_cache:
+        name: Restore Bower Package Cache
+        keys:
+          - v1-bower-cache-{{ .Branch }}-{{ checksum "bower.json" }}
+    - run:
+        name: Install packages with Bower
+        command: bower install
+    - save_cache:
+        name: Save Bower Package Cache
+        key: v1-bower-cache-{{ .Branch }}-{{ checksum "bower.json" }}
+        paths:
+          - ~/.cache/bower/
+    - run:
+        name: Ember Tests
+        command: yarn test
