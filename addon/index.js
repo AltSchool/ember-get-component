@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import findComponentBySelector from './find-component-by-selector';
 import findComponentByConstructor from './find-component-by-constructor';
-import  _ from 'lodash';
 import { getContext } from 'ember-test-helpers';
 
 const DEBUG_HEADER_STYLE = 'background-color: #46b2de; color: rgba(0,0,0,0.7); padding: 5px; line-height: 18px';
@@ -118,8 +117,13 @@ const debug = function() {
 
 function _logElements({ $items, collectionName, targetAttr, getElementMethodName }) {
   console.groupCollapsed(`%cI found the following ${collectionName} in this context:`, DEBUG_HEADER_STYLE);
-  const groups = _.groupBy($items, (el) => $(el).attr(targetAttr));
-  _.each(groups, (elements, attrValue) => {
+  const groups = Array.from($items).reduce((acc, el) => {
+    const attrValue = $(el).attr(targetAttr);
+    acc[attrValue] = (acc[attrValue] || []).concat(el);
+    return acc;
+  }, {});
+  Object.keys(groups).forEach((attrValue) => {
+    const elements = groups[attrValue];
     console.groupCollapsed(`${attrValue} (${elements.length})`);
     console.log(`Use this to select: getComponent.${getElementMethodName}('${attrValue}')`);
     elements.forEach(el => console.log(el));
@@ -136,12 +140,14 @@ function _logEmptyState(collectionName, recommendationText) {
 }
 
 function _logExampleCode({ $items, headerText, targetAttr, getElementMethodName }) {
-  const items = $items.map((i, el) => {
-    return $(el).attr(targetAttr);
-  });
-  const groups = _.groupBy(items);
-  const code = _.reduce(groups, (acc, items, attrValue) => {
-    return `${acc}\nexpect(getComponent.${getElementMethodName}('${attrValue}')).to.have.length(${items.length});`;
+  const attrValues = Array.from($items).map(el => $(el).attr(targetAttr));
+  const counts = attrValues.reduce((acc, attrValue) => {
+    acc[attrValue] = (acc[attrValue] || 0) + 1;
+    return acc;
+  }, {});
+  const code = Object.keys(counts).reduce((acc, attrValue) => {
+    const count = counts[attrValue];
+    return `${acc}\nexpect(getComponent.${getElementMethodName}('${attrValue}')).to.have.length(${count});`;
   }, headerText);
   console.log(code);
 }
