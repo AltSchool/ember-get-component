@@ -2615,13 +2615,7 @@ ember-sinon@0.7.0:
     ember-cli-babel "^5.1.7"
     sinon "^2.1.0"
 
-ember-test-helpers@0.5.27:
-  version "0.5.27"
-  resolved "https://registry.yarnpkg.com/ember-test-helpers/-/ember-test-helpers-0.5.27.tgz#8cce5c742f86d6d2228f976c23b749c00ffd7f21"
-  dependencies:
-    klassy "^0.1.3"
-
-ember-test-helpers@^0.6.3:
+ember-test-helpers@0.6.3, ember-test-helpers@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/ember-test-helpers/-/ember-test-helpers-0.6.3.tgz#f864cdf6f4e75f3f8768d6537785b5ab6e82d907"
 
@@ -3830,10 +3824,6 @@ kind-of@^3.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
   dependencies:
     is-buffer "^1.1.5"
-
-klassy@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/klassy/-/klassy-0.1.3.tgz#c31d5756d583197d75f582b6e692872be497067f"
 
 klaw@^1.0.0:
   version "1.3.1"
